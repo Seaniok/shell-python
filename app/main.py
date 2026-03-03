@@ -3,8 +3,8 @@ import sys
 
 def main():
     sys.stdout.write("$ ")
-    users_input = input()
-    print(f"{users_input}: command not found")
+    command = input()
+    print(f"{command}: command not found")
     
     pass
 
