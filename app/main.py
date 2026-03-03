@@ -23,7 +23,7 @@ def main():
                 print(f"{command[5:]} is {path}")   # jeśli jest to Prawdziwe, czyli jeśli jest taki plik w PATH to zwraca pełną nazwę
             else:
                 print(f"{command[5:]}: not found")
-        elif path := sh.which(parts[0]):
+        elif path := sh.which(parts[0]):    # obsługa komand zewnętrznych
             sp.run(parts)
         else:
             print(f"{command}: command not found")
