@@ -29,7 +29,7 @@ def main():
             try: 
                 os.chdir(path)
             except FileNotFoundError:
-                print(f"cd: <{path}>: No such file or directory")
+                print(f"cd: {path}: No such file or directory")
         elif command == 'pwd':
             print(os.getcwd())
         elif path := sh.which(parts[0]):    # obsługa komand zewnętrznych
