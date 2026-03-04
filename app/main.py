@@ -2,6 +2,7 @@ import sys
 import shutil as sh
 import subprocess as sp
 import os
+import shlex
 
 def main():
     while True:
@@ -17,7 +18,11 @@ def main():
         if command == 'exit':
             break
         elif command.startswith("echo"):
-            print(command[5:])
+            try:
+                parsed_args = shlex.split(command[5:])
+                print(" ".join(parsed_args))
+            except ValueError:
+                pass
         elif command.startswith("type"):    # Komenda *type* i rozpoznanie innych wbudowanych funkcji
             if command[5:] in builtin_commands:
                 print(f"{command[5:]} is a shell builtin")
