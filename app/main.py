@@ -8,7 +8,6 @@ def main():
         sys.stdout.write("$ ")
         command = input()
         builtin_commands = ["exit", "echo", "type", "pwd", "cd"]
-        current_working_directory = os.getcwd() 
         
         parts = command.split() 
         if not parts:   # Czyli jeśli lista jest pusta przerwij działanie i skocz do $
@@ -25,15 +24,16 @@ def main():
                 print(f"{command[5:]} is {path}")   # jeśli jest to Prawdziwe, czyli jeśli jest taki plik w PATH to zwraca pełną lokalizację
             else:
                 print(f"{command[5:]}: not found")
+        elif command.startswith("cd"): # zmiana folderu pracy
+            path = command[3:]
+            try: 
+                os.chdir(path)
+            except FileNotFoundError:
+                print(f"cd: <{path}>: No such file or directory")
+        elif command == 'pwd':
+            print(os.getcwd())
         elif path := sh.which(parts[0]):    # obsługa komand zewnętrznych
             sp.run(parts)
-        elif command.startswith("cd"):
-            if path := sh.which(command[3:]):
-                current_working_directory = os.getcwd(path)
-            else:
-                print(f"cd: <{command[3:]}>: No such file or directory")
-        elif command == 'pwd':
-            print(current_working_directory)
         else:
             print(f"{command}: command not found")
         
