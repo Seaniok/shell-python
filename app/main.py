@@ -7,7 +7,7 @@ def main():
     while True:
         sys.stdout.write("$ ")
         command = input()
-        builtin_commands = ["exit", "echo", "type", "pwd"]
+        builtin_commands = ["exit", "echo", "type", "pwd", "cd"]
         current_working_directory = os.getcwd() 
         
         parts = command.split() 
@@ -27,6 +27,11 @@ def main():
                 print(f"{command[5:]}: not found")
         elif path := sh.which(parts[0]):    # obsługa komand zewnętrznych
             sp.run(parts)
+        elif command.startswith("cd"):
+            if path := sh.which(command[3:]):
+                current_working_directory = os.getcwd(path)
+            else:
+                print(f"cd: <{command[3:]}>: No such file or directory")
         elif command == 'pwd':
             print(current_working_directory)
         else:
