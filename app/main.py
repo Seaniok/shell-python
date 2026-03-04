@@ -8,6 +8,7 @@ def main():
         sys.stdout.write("$ ")
         command = input()
         builtin_commands = ["exit", "echo", "type", "pwd", "cd"]
+        home_directory = os.path.expanduser("~")
         
         parts = command.split() 
         if not parts:   # Czyli jeśli lista jest pusta przerwij działanie i skocz do $
@@ -26,6 +27,8 @@ def main():
                 print(f"{command[5:]}: not found")
         elif command.startswith("cd"): # zmiana folderu pracy
             path = command[3:]
+            if path == '~':
+                path = home_directory
             try: 
                 os.chdir(path)
             except FileNotFoundError:
